@@ -1,0 +1,2 @@
+all:
+	./acme.py
