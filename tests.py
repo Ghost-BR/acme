@@ -11,34 +11,37 @@ class AcmeTestCase(unittest.TestCase):
 
     def test_first_call(self):
         self.assertEqual(acme.compressor, False)
-        custo = acme.refrigera(30, 30)
+        temp, custo = acme.refrigera(30, 30)
         self.assertEqual(custo, 0.50)
+        self.assertAlmostEqual(temp, 30, delta=2)
         self.assertEqual(acme.compressor, True)
-        custo = acme.refrigera(30, 30)
+        temp, custo = acme.refrigera(30, 30)
         self.assertEqual(custo, 0.0)
+        self.assertAlmostEqual(temp, 30, delta=2)
         self.assertEqual(acme.compressor, True)
 
     def test_1_grau_acima(self):
-        custo = acme.refrigera(31, 30)
+        temp, custo = acme.refrigera(31, 30)
         self.assertEqual(custo, 0.50)
+        self.assertAlmostEqual(temp, 30, delta=2)
 
     def test_2_grau_acima(self):
-        custo = acme.refrigera(32, 30)
+        temp, custo = acme.refrigera(32, 30)
         self.assertEqual(custo, 0.50)
+        self.assertAlmostEqual(temp, 30, delta=2)
 
     def test_3_grau_acima(self):
-        custo = acme.refrigera(33, 30)
-        self.assertAlmostEqual(custo, 1.00, delta=0.01)
+        temp, custo = acme.refrigera(33, 30)
+        self.assertAlmostEqual(custo, 0.60, delta=0.01)
+        self.assertAlmostEqual(temp, 30, delta=2)
 
-    def test_over_time(self):
-        custo = acme.refrigera(30, 20)
-        self.assertAlmostEqual(custo, 1.70, delta=0.01)
-        # passou 2 min desde ligado
-        custo = acme.refrigera(21, 20)
-        self.assertAlmostEqual(custo, 0.0, delta=0.01)
-        # passou 5 min desde ligado
-        custo = acme.refrigera(22.5, 20)
-        self.assertAlmostEqual(custo, 0.50, delta=0.01)
+    def test_simulator_360min(self):
+        temp_inicial = 30
+        temp_desejada = 20
+        tempo = 360
+        custo = acme.simulador(temp_inicial, temp_desejada, tempo)
+        self.assertAlmostEqual(custo, 19.3, delta=0.01)
+
 
 if __name__ == "__main__":
     unittest.main()
