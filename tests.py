@@ -36,10 +36,7 @@ class AcmeTestCase(unittest.TestCase):
         self.assertAlmostEqual(temp, 30, delta=2)
 
     def test_simulator_360min(self):
-        temp_inicial = 30
-        temp_desejada = 20
-        tempo = 360
-        custo = acme.simulador(temp_inicial, temp_desejada, tempo)
+        custo = acme.simulador(30, 20, 0.5, 360)
         self.assertAlmostEqual(custo, 19.3, delta=0.01)
 
 
