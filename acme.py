@@ -5,15 +5,20 @@ compressor = False
 
 
 def reduz_um_grau():
-    pass
+    '''Função do hardware'''
+
+
+def liga_compressor():
+    global compressor
+    compressor = True
 
 
 def refrigera(temp_atual, temp_desejada):
-    global compressor
+    '''reduz temperatura atual ate temperatura desejada'''
 
     custo = 0.0
     if not compressor:
-        compressor = True
+        liga_compressor()
         custo += 0.50
     max_temp = temp_desejada + 2
     if temp_atual > max_temp:
@@ -25,21 +30,18 @@ def refrigera(temp_atual, temp_desejada):
 
 
 def simulador(temp_inicial, temp_desejada, delta_temp, tempo):
+    '''Simulador simples do ar-condicionado'''
     custo = 0.0
     temp = temp_inicial
-    print('Temperatura atual {} C'.format(temp))
-    print('Ligando ar-condicionado')
-    for i in range(tempo):
+    for _ in range(tempo):
         temp, new_custo = refrigera(temp, temp_desejada)
-        print('Temperatura apos refrigera {} C'.format(temp))
         custo += new_custo
-        print('Passaram {} minutos'. format(i))
         temp += delta_temp
-        print('Temperatura subil {} C, {:.2f} C'.format(delta_temp, temp))
     return custo
 
 
 if __name__ == '__main__':
     minutos = 360
+    print('Ligando ar-condicionado')
     custo = simulador(30, 20, 0.5, minutos)
-    print('Total gasto nos {} minutos foram ${:.2f}'.format(minutos, custo))
+    print('Total gasto nos %d minutos foram R$ %.2f' % (minutos, custo))
