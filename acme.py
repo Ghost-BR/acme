@@ -34,8 +34,8 @@ def simulador(temp_inicial, temp_desejada, delta_temp, tempo):
     custo = 0.0
     temp = temp_inicial
     for _ in range(tempo):
-        temp, new_custo = refrigera(temp, temp_desejada)
-        custo += new_custo
+        temp, novo_custo = refrigera(temp, temp_desejada)
+        custo += novo_custo
         temp += delta_temp
     return custo
 
